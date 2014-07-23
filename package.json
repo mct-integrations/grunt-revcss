@@ -1,0 +1,46 @@
+{
+  "name": "grunt-revcss",
+  "description": "Revisions css and updates the references to it",
+  "version": "0.1.0",
+  "homepage": "https://github.com/edude03/grunt-revcss",
+  "author": {
+    "name": "Michael Francis",
+    "email": "edude03@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/edude03/grunt-revcss.git"
+  },
+  "bugs": {
+    "url": "https://github.com/edude03/grunt-revcss/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/edude03/grunt-revcss/blob/master/LICENSE-MIT"
+    }
+  ],
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "devDependencies": {
+    "chai": "^1.9.1",
+    "grunt": "~0.4.5",
+    "grunt-contrib-clean": "^0.5.0",
+    "grunt-contrib-jshint": "^0.9.2",
+    "grunt-contrib-nodeunit": "^0.3.3",
+    "sinon": "^1.10.3"
+  },
+  "peerDependencies": {
+    "grunt": "~0.4.5"
+  },
+  "keywords": [
+    "gruntplugin"
+  ],
+  "dependencies": {
+    "fs-extra": "^0.10.0"
+  }
+}
