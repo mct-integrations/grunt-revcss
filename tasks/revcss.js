@@ -54,11 +54,24 @@ var replaceRefFn = function replaceRef(fileSrc, replacements, matchRegex){
     var match = matches[1],
         oldName = path.join(buildDir, match);
 
-    //Hack: Since some paths are relative to the current (css)
-    //folder, if we don't find css in the resulting path to the file
-    //we'll add it to the path 
-    //To fix this properly we'd need to know where this file is located,
-    //but this method doesn't have access to that info
+    
+
+    /* Hack: Since some paths are relative to the current (css) we check if 
+    the path is relative and if so we guess which folder it's relative to and replace 
+    it with a path relative to root.
+    To fix this properly we'd need to know where this file is located,
+    but this method doesn't have access to that info */
+    
+    //If the string begins with "../../"
+    if (match.substr(0, 6) === '../../'){
+      //Change change the relative path to a absolute path
+      oldName = match.replace('../../', buildDir + '/css/');
+    }
+
+
+    //Similar to above, this is a hack for 
+    //import url("something.css");
+    // [todo] - add a universal method to resolve paths
     if (path.dirname(oldName).indexOf('css') === -1){
       oldName = path.join(buildDir, 'css', match);
     }
