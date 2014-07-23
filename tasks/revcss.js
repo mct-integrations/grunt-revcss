@@ -110,7 +110,8 @@ module.exports = function(grunt) {
         }
 
         //Write the PHP build map file
-        fs.readFile(path.join(buildDir, 'cssmaptemplate.php'), 'utf8', function(err, tmpl){
+        var modPath = "./node_modules/grunt-revcss";
+        fs.readFile(path.join(modPath, 'cssmaptemplate.php'), 'utf8', function(err, tmpl){
           tmpl = tmpl.replace('#paths', buildPHPArray(revisioned));
           fs.writeFile(path.join(buildDir, 'cssmap.php'), tmpl, done);
         })
