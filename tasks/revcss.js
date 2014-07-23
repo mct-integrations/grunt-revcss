@@ -90,7 +90,7 @@ var buildPHPArray = function(paths){
       lines.push(util.format('\t"%s" => "%s"', p.replace(buildDir, ''), paths[p].replace(buildDir, '')));
     }
 
-  return lines.join('\n');
+  return lines.join(',\n');
 }
 
 module.exports = function(grunt) {
