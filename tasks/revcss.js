@@ -16,6 +16,8 @@ var path = require('path'),
 var cssRegex = RegExp(/\s?import\s+url\("(.*)"\)/gi);
 //Href regex - capture anything where there is [space]href="(somevalue)"
 var hrefRegex = RegExp(/\s+href="([^"<?]*\.css)"/gi);
+
+// [todo] - Refactor these to use grunt options
 var buildDir = '../build-tmp',
     inputDir = path.join(buildDir, './css');
 
@@ -44,6 +46,8 @@ Object.values = function(obj){
  */
 var replaceRefFn = function replaceRef(fileSrc, replacements, matchRegex){
   var matches;
+
+  // [todo] - Allow multiple regexes to be evaluated in this loop
   while(matches = matchRegex.exec(fileSrc)) {
     //[0] is the original string, [1] is the capture group 
     //Match is the name without buildDir
@@ -123,6 +127,7 @@ module.exports = function(grunt) {
 
     //Hardcoding the reading of a few key files until I rewrite this to use grunt's files system
     //but iterating over the templates directory is probably the best way to do this going forward
+    // [todo] - Figure out a better way to integrate these files into the build process
     var files = ['./templates/default/header.tmpl', './templates/default/madetoorder.html'];
 
 
