@@ -19,6 +19,18 @@ var hrefRegex = RegExp(/\s+href="([^"<?]*\.css)"/gi);
 var buildDir = '../build-tmp',
     inputDir = path.join(buildDir, './css');
 
+/**
+ * Function to pull out all of an objects values
+ */
+Object.values = function(obj){
+  var vals = [];
+  for (var prop in obj){
+    if (obj.hasOwnProperty(prop)){
+      vals.push(obj[prop]);
+    }
+  }
+  return vals;
+}
 
 /**
  * Looks for items to replace in the file source
@@ -84,37 +96,29 @@ module.exports = function(grunt) {
     var done = this.async();
     
     //Files that have been revisioned
-    var revisioned = grunt.filerev.summary;
+    var revisioned = grunt.filerev.summary,
+        revisionedPaths = Object.values(revisioned);
 
-    //Get all the files in the 
-    fs.readdir(inputDir, function(err, files){
-      if (err) { throw err; }
-        var transformedFiles = files.map(function(filename){
-          //Return the full path to the file 
-          return path.join(inputDir, filename);
-        }).filter(function(filePath){
-          //Filter out directories
-          return fs.statSync(filePath).isFile();
-        }).map(function(filePath){
-          //Read in the file
-          return fs.readFileSync(filePath, 'utf8');
-        }).map(function(fileSrc){
-          //Perform the replacement
-          return replaceRefFn(fileSrc, revisioned, cssRegex);
-        })
+
+    var transformedFiles = revisionedPaths.map(function(filePath){
+      //Read in the file
+      return fs.readFileSync(filePath, 'utf8');
+    }).map(function(fileSrc){
+      //Perform the replacement
+      return replaceRefFn(fileSrc, revisioned, cssRegex);
+    });
         
-        //Write the files back to disk
-        for(var i = 0, leng = files.length; i < leng; i++){
-          console.log('writing to %s', files[i]);
-          fs.writeFileSync(files[i], transformedFiles[i]);
-        }
+    //Write the files back to disk
+    for(var i = 0, leng = revisionedPaths.length; i < leng; i++){
+      console.log('writing to %s', revisionedPaths[i]);
+      fs.writeFileSync(revisionedPaths[i], transformedFiles[i]);
+    }
 
-        //Write the PHP build map file
-        var modPath = "./node_modules/grunt-revcss";
-        fs.readFile(path.join(modPath, 'cssmaptemplate.php'), 'utf8', function(err, tmpl){
-          tmpl = tmpl.replace('#paths', buildPHPArray(revisioned));
-          fs.writeFile(path.join(buildDir, 'cssmap.php'), tmpl, done);
-        })
+    //Write the PHP build map file
+    var modPath = "./node_modules/grunt-revcss";
+    fs.readFile(path.join(modPath, 'cssmaptemplate.php'), 'utf8', function(err, tmpl){
+      tmpl = tmpl.replace('#paths', buildPHPArray(revisioned));
+      fs.writeFile(path.join(buildDir, 'cssmap.php'), tmpl, done);
     })
 
     //Hardcoding the reading of a few key files until I rewrite this to use grunt's files system
