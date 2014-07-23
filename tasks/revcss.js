@@ -71,7 +71,7 @@ var replaceRefFn = function replaceRef(fileSrc, replacements, matchRegex){
 var buildPHPArray = function(paths){
   var lines = [];
     for(var p in paths){
-      lines.push(util.format('\t"%s" => "%s"', p, paths[p]));
+      lines.push(util.format('\t"%s" => "%s"', p.replace(buildDir, ''), paths[p].replace(buildDir, '')));
     }
 
   return lines.join('\n');
