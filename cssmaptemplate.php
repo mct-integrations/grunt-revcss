@@ -8,7 +8,7 @@ $paths = array(
 );
 
 function getCSSPath($origPath, $paths) {
-	if (in_array($origPath, $paths)){
+	if (array_key_exists($origPath, $paths)){
 		return $paths[$origPath];
 	} 
 	return $origPath;
