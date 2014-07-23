@@ -140,7 +140,7 @@ module.exports = function(grunt) {
     //Write the files back to disk
     for (var i = 0, leng = files.length; i < leng; i++){
       console.log('writing to %s', files[i]);
-      fs.writeFileSync(files[i], transformedHTML[i]);
+      fs.writeFileSync(path.join(buildDir, files[i]), transformedHTML[i]);
     }
 
 
