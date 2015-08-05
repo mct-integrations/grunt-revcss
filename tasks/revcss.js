@@ -146,7 +146,7 @@ module.exports = function(grunt) {
     //Hardcoding the reading of a few key files until I rewrite this to use grunt's files system
     //but iterating over the templates directory is probably the best way to do this going forward
     // [todo] - Figure out a better way to integrate these files into the build process
-    var files = ['./templates/default/header.tmpl', './templates/default/madetoorder.html'];
+    var files = ['./templates/default/header.tmpl', './templates/default/madetoorder.html', './templates/default/picker/print-layout.tmpl'];
 
 
     var transformedHTML = files.map(function(filePath){
